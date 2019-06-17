@@ -1,6 +1,6 @@
-# xFx Un Framewrok para dominarlos a todos (SPS Madrid 2019 Workshop)
+# xFx Un Framework para dominarlos a todos (SPS Madrid 2019 Workshop)
 
-## Introduccion
+## Introducción
 
 En este workshop vamos a desarrollar un webpart spfx que podrá ejecutarse tanto en SharePoint como en Teams.
 
@@ -10,11 +10,11 @@ Dicho webpart, nos va a permitir etiquetar un Team, usando un TermSet de SharePo
 
 _Nota_: xFx todavía no existe como tal, pero es el nombre con el que se empieza a conocer entra la comunidad _OfficeDev PnP_ a la posibilidad de que el mismo modelo de desarrollo para SharePoint, sirva para otras plataformas, como ya ocurre con Teams, y en un futuro podría ser Office, etc.
 
-## Creacion de una Schema Extension en MS Graph API
+## Creación de una Schema Extension en MS Graph API
 
-Para guardar los Tags asociados al Team, vamos a utilizar una Schema Extension en MS Graph API. Graph extensions permiten agregar informacion personalizada a entidades de Graph, como Users, Groups/Teams, Events, Mails, etc.
+Para guardar los Tags asociados al Team, vamos a utilizar una _Schema Extension_ en MS Graph API. Graph extensions permiten agregar información personalizada a entidades de Graph, como Users, Groups/Teams, Events, Mails, etc.
 
-Para crear la extension, recomendamos usar la herramienta Graph Explorer [https://developer.microsoft.com/en-us/graph/graph-explorer](https://developer.microsoft.com/en-us/graph/graph-explorer)
+Para crear la extensión, recomendamos usar la herramienta Graph Explorer [https://developer.microsoft.com/en-us/graph/graph-explorer](https://developer.microsoft.com/en-us/graph/graph-explorer)
 
 Primero asegurate de que das el permiso _Directory.AccessAsUser.All_ a Graph Explorer, y una vez hecho, debes hacer un POST a _https://graph.microsoft.com/v1.0/schemaExtensions_ con el siguiente _body_ (asegurate de actualizar los valores que correspondan)
 
@@ -70,7 +70,7 @@ __Nota__: Lo más probable es que hayas creado la extensión utilizando un __id_
 
 __Copia y guarda el _id_ generado, ya que lo necesitaremos más adelante en nuestro código spfx__
 
-## Creacion proyecto spfx
+## Creación proyecto spfx
 
 Antes de nada, debemos crear un proyecto spfx usando la plantilla de Yeoman:
 
@@ -85,7 +85,7 @@ yo @microsoft/sharepoint --plusbeta
 - Select WebPart as the client-side component type to be created.
 
 - Enter __TeamsTagging__ for the web part name, and then select Enter.
-- Enter _Webpart to Tag Teams based on a SharePoint TermSet_ as the description of the web part, and then select Enter.
+- Enter "_Webpart to Tag Teams based on a SharePoint TermSet_" as the description of the web part, and then select Enter.
 - Enter __React__ option for the framework, and then select Enter to continue.
 
 Despues de unos pocos minutos, tendremos disponible nuestro proyecto spfx base creado. Ya podemos pasar a editar nuestro codigo.
@@ -264,3 +264,144 @@ Ahora definimos la función para obtener datos de nuestra Schema extensión (act
     return tags;
   }
 ```
+## Guardando los Tags/Terms seleccionados en nuestra custom Schema extension
+
+En esta sección vamos a ver cómo podemos guardar nuestros tags en la Schema Extension de un Team concreto. Para ello, añadimos el siguiente código a nuestro componente React. Básicamente, lo que necesitamos es hacer un PATCH al endpoint de Graph para el Team/Group específico: _v1.0/groups/${groupId}_
+En el body de la request, especificaremos un JSON similar a:
+
+```js
+{
+        "inheritscloud_TeamsTagging": {
+          "tag1": '9237a3f0-9063-4348-a85c-7b9178a3bd9a__Marketing__Marketing__4a076cae-831c-4882-9b54-0f54f888e1fc',
+          "tag2": 'c80f2e9a-0d2b-4134-9032-2a4c9ed320a0__Guides__Guides__4a076cae-831c-4882-9b54-0f54f888e1fc',
+          "tag3": ''
+        }
+}
+```
+
+```ts
+  private async _updateTeamTags(): Promise<void> {
+    const updated: any = await this._updateExtensionInGroup();
+    if (updated === 204) {
+      this.setState({
+        tagsUpdatedResult: 'Team tags updated successfully!'
+      });
+    } else {
+      console.log("Error updating data");
+    }
+  }
+
+  private async _updateExtensionInGroup(): Promise<any> {
+
+    const httpClientOptions: IGraphHttpClientOptions = {
+      method: "PATCH",
+      body: JSON.stringify({
+        "inheritscloud_TeamsTagging": {
+          "tag1": this.state.tags[0] ? this._serializeIPickerTerm(this.state.tags[0]) : '',
+          "tag2": this.state.tags[1] ? this._serializeIPickerTerm(this.state.tags[1]) : '',
+          "tag3": this.state.tags[2] ? this._serializeIPickerTerm(this.state.tags[2]) : ''
+        }
+      })
+    };
+
+    const groupId: Guid = this.props.context.pageContext.site.group.id;
+
+    const response: HttpClientResponse = await this.props.context.graphHttpClient.fetch(
+      `v1.0/groups/${groupId}`,
+      GraphHttpClient.configurations.v1,
+      httpClientOptions);
+
+    return response.status;
+  }
+```
+
+## Buscando Teams con Tags similares
+
+Nuestro webpart nos ofrece la posibilidad de buscar Teams que tengan los mismos Tags que el Team actual (para el caso del Workshop, lo haremos usando sólo el primer Tag almancenado, pero podríamos modificar la query y hacerlo tan complejo como queramos).
+
+Una de las ventajas de utilizar un Schema extenion, es que las propiedades pueden utilizarse el filtrados, pudiendo hacer algo como:
+
+```js
+v1.0/groups/?$filter=inheritscloud_TeamsTagging/tag1 eq 'TAG_VALUE_HERE'
+```
+
+Asi pues, definimos la siguiente función para lanzar una query de búsqueda a Graph, filtrando los Teams/Groups que tienen el mismo valor en el primer Tag asignado.
+
+Antes de añadir la función, vamos a definir una Interfaz para tipar mínimamente el resultado de la query. Editaremos el fichero _ITeamsTaggingProps.ts_ definiendo la siguiente interfaz:
+
+```ts
+export interface ITeamInfo {
+  id: string;
+  name: string;
+  tags: string[];
+}
+```
+
+Ahora ya sí, actualizamos el código de nuestro componente React con la siguiente función, que será invocada desde el botón de _Find similar teams_
+(__actualiza el id de la extension__, tanto en la query como en el objeto JSON de respuesta)
+
+```ts
+  private async _findSimilarTeams(): Promise<void> {
+    const tag1: string = this._serializeIPickerTerm(this.state.tags[0]);
+
+    const response: HttpClientResponse = await this.props.context.graphHttpClient.get(
+      `v1.0/groups/?$filter=inheritscloud_TeamsTagging/tag1 eq '${tag1}'&$select=id,displayName,inheritscloud_TeamsTagging`,
+      GraphHttpClient.configurations.v1);
+
+    const responseJson: any = await response.json();
+
+    const similarTeams = responseJson.value.map((team) => {
+      let tags: IPickerTerms = [];
+
+      if (team.inheritscloud_TeamsTagging.tag1) tags.push(this._toIPickerTerm(team.inheritscloud_TeamsTagging.tag1));
+      if (team.inheritscloud_TeamsTagging.tag2) tags.push(this._toIPickerTerm(team.inheritscloud_TeamsTagging.tag2));
+      if (team.inheritscloud_TeamsTagging.tag3) tags.push(this._toIPickerTerm(team.inheritscloud_TeamsTagging.tag3));
+
+      const similarTeam: ITeamInfo = {
+        id: team.id,
+        name: team.displayName,
+        tags: tags.map((t: IPickerTerm) => t.name)
+      };
+      return similarTeam;
+    });
+
+    this.setState({
+      similarTeams: similarTeams
+    });
+  }
+```
+
+Finalmente, ya sólo queda definir el constructor de nuestro componente React, ya que necesitamos inicializar el estado del componente a unos valores por defecto, así como hacer el _binding_ correcto de los botones de la interfaz:
+
+```ts
+  constructor(props: ITeamsTaggingProps) {
+    super(props);
+
+    this._findSimilarTeams = this._findSimilarTeams.bind(this);
+    this._updateTeamTags = this._updateTeamTags.bind(this);
+    this._onTaxPickerChange = this._onTaxPickerChange.bind(this);
+
+    this.state = {
+      similarTeams: [],
+      tags: [],
+      tagsUpdatedResult: ''
+    };
+  }
+  ```
+
+
+Si llegado este punto, tienes cualquier problema con el código, puedes compararlo con este repo de Github:
+[https://github.com/SharePoint/sp-dev-fx-webparts/tree/master/samples/react-teams-tagging](https://github.com/SharePoint/sp-dev-fx-webparts/tree/master/samples/react-teams-tagging)
+
+Como último paso, aunque podemos hacerlo en tiempo de configuración del webpart, vamos a añadir el ID de nuestro TermSet de SharePoint, como valor predeterminado en la propiedade del webpart que creamos al principio:
+
+- edita el fichero _TeamstaggingWebPart.manifest.json_
+- dentro de _preconfiguredEntries/properties_ añade el siguiente JSON:
+```json
+"properties": {
+      "termSetId": "SP_TERMSET_ID"
+    }
+```
+
+## Despliegue y configuración en Teams
+TBC...
