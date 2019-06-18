@@ -1,4 +1,4 @@
-#Library Components
+# Library Components
 Uno de los aspectos más importante dentro de los equipos de desarrollo es empezar a reutilizar aquellos componentes que se repiten proyecto tras proyecto. En base a esta idea en la comunidad SharePoint han salido proyectos internacionales como PnP o proyectos locales como ENMARCHA. Ahora bien, estan muy chulas estas inicativas que agilizan el desarrollo/aprovisionamiento de nuestra solución, pero como podemos compartir elementos visuales para no tener que estar siempre haciendolos. Al final a los superheroes no nos gusta siempre estar haciendo lo mismo, nos gusta estar enfrentandonos a nuevos villanos/retos. Si eso lo trasladamos a SPFx seria nos gusta estar haciendo cosas nuevas y no siempre el mismo People Picker proyecto tras proyecto que tiene funcionalidad cuanto menos "similar".
 Sin embargo a pesar que esta solución esta muy bien y puede cumplir con mucho de los requerimientos desde mi punto de vista se queda corta para nuestras necesidades. En estas libreria de Componentes 
 : crearnos nuestro propio paquete npm https://medium.com/@nilayvishwakarma/build-an-npm-package-with-typescript-by-nilay-vishwakarma-f303d7072f80 y publicarlo en un feed privado en el Azure DevOps o bien uno público en NPM. Cuales son los principales inconvenientes de esto para los desarrolladores de SharePoint, el conocimiento de algunas herramientas que no forman parte de nuestro día a día. Con SPFx la configuración del Webpack pasa desapercibida, la generación del bundle practicamente no se hace (aunque algunos aspectos si que intenamos mejorarlos para evitar duplicidad de librerias, etc.. ).
@@ -9,7 +9,7 @@ Una opción que no me planteo es el estar duplicando código de solución en sol
 
 Dada esta necesidad, desde el la comunidad PnP se pusieron manos a la obra en lo que llos han llamdo Library Components. ¿Que son? No son más que un componente que instalamos y lo podemos referenciar en cualquier de los proyectos/webparts/soluciones que estamos implementando. Actualmente esta característica esta en Preview por lo que no se puede usar en entornos productivos pero si que es bueno empezar a conocerla para poder usarla en cuanto este disponible en GA.
 
-##Creación de un componente de Lista de Pinterest 
+## Creación de un componente de Lista de Pinterest 
 Cree un directorio de proyecto en su ubicación favorita
 md corporate-library
 
