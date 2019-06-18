@@ -1,0 +1,9 @@
+{
+  "id": "227a6db8-23d7-4835-bbc7-b408428efa48",
+  "alias": "AvengerlibraryLibrary",
+  "componentType": "Library",
+
+  // The "*" signifies that the version should be taken from the package.json
+  "version": "*",
+  "manifestVersion": 2
+}
