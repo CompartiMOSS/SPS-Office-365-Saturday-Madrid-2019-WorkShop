@@ -1,12 +1,12 @@
-# Proyecto inicial
+# 1 Proyecto inicial
 Descarga los templates de Bot Framework 4 para Visual Studio [aquí](https://marketplace.visualstudio.com/items?itemName=BotBuilder.botbuilderv4) e instálalos.
-![descarga e instalación de la plantilla](images/descarga_instalación_vsix.png)
+![descarga e instalación de la plantilla](assets/descarga_instalacion_vsix.png)
 Abre Visual Studio → Crea un nuevo proyecto → escribe “Empty Bot” en la barra de búsqueda de templates → Clica en “Empty Bot” → Clica Next
-![crear proyecto nuevo en VS2019](images/create_project.png)
+![crear proyecto nuevo en VS2019](assets/create_project.png)
 Configura el proyecto nuevo, indica nombre del proyecto, ubicación y nombre de la solución.
-![Configura el proyecto nuevo](images/config_nuevo_proyecto.png)
+![Configura el proyecto nuevo](assets/config_nuevo_proyecto.png)
 Como resultado tendremos una solución como la que se muestra abajo. Veremos una a una las clases que nos vienen dadas. 
-![solución](images/solucion.png)
+![solución](assets/solucion.png)
 ### 1.	Program
 Se crea, instanciando la clase startup; construye y arranca el host web.
  ~~~
