@@ -7,7 +7,7 @@
 Desde un Site Script es posible llamar a un Flow o una Logic App, de forma que podemos llevar a cabo multitud de acciones cuando se crea un sitio de SharePoint.
 En el caso que nos ocupa, pretendemos llamar a una Logic App desde un Site Script, de forma que esta Logic App pueda llamar a un RunBook de Azure, que a su vez ejecutará una série de comandos de PnP PowerShell para poder aplicar una plantilla de aprovisionamiento sobre el sitio de SharePoint creado.
 
-![Arquitectura de la solución](./images/arquitectura.png)
+![Arquitectura de la solución](./images/Arquitectura.png)
 
 ### Pasos
 
