@@ -1,5 +1,6 @@
 # 5 Publicación del bot en Azure
 
+
 Publicaremos ahora el Bots en Azure como un servicio "Azure App Services" desde Visual studio:
 
 ![ConfigAzure](assets/01_PublishAzure.png)
@@ -7,7 +8,7 @@ Publicaremos ahora el Bots en Azure como un servicio "Azure App Services" desde 
 ![ConfigAzure](assets/02_PublishAzure.png)
 
 
-Despues de realizar la publicación crearemos un **"Bot Channels Registration"** 
+Despues de realizar la publicación crearemos un **"Bot Channels Registration"** desde el **Portal de Azure**
 
 ![ConfigAzure](assets/03_PublishAzure.png)
 
@@ -21,9 +22,10 @@ Despues de la creación desde la configuración "Settings" seleccionamos **"Mana
 ![ConfigAzure](assets/07_PublishAzure.png)
 
 
-Desde la configuración de canales tendremos que habilitar el **"Channel MS Teams"
+Desde la configuración de canales tendremos que habilitar el **"Channel MS Teams"**
 
 ![ConfigAzure](assets/08_PublishAzure.png)
+
 
 ![ConfigAzure](assets/09_PublishAzure.png)
 
