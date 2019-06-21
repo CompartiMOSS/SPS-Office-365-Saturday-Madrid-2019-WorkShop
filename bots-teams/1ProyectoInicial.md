@@ -1,6 +1,7 @@
 # 1 Proyecto inicial
 Descarga los templates de Bot Framework 4 para Visual Studio [aquí](https://marketplace.visualstudio.com/items?itemName=BotBuilder.botbuilderv4) e instálalos.
 ![descarga e instalación de la plantilla](assets/descarga_instalacion_vsix.png)
+
 Abre Visual Studio → Crea un nuevo proyecto → escribe “Empty Bot” en la barra de búsqueda de templates → Clica en “Empty Bot” → Clica Next
 ![crear proyecto nuevo en VS2019](assets/create_project.png)
 Configura el proyecto nuevo, indica nombre del proyecto, ubicación y nombre de la solución.
@@ -9,7 +10,8 @@ Como resultado tendremos una solución como la que se muestra abajo. Veremos una
 ![solución](assets/solucion.png)
 ### 1.	Program
 Se crea, instanciando la clase startup; construye y arranca el host web.
- ~~~
+
+~~~
 public static void Main(string[] args)
 {
       CreateWebHostBuilder(args).Build().Run();
@@ -20,7 +22,7 @@ public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
            .UseStartup<Startup>();
 ~~~
 ### 2.	Startup
-Como es de esperar, la aplicación se describe en base a los servicios que creamos en la clase Startup. De aquí, vemos interesante el configuration provider de credenciales, que veremos en el punto 3; el bot adapter, que editaremos más tarde; y la clase que implementa IBot, que veremos en el punto 5.# foto
+Como es de esperar, la aplicación se describe en base a los servicios que creamos en la clase Startup. De aquí, vemos interesante el configuration provider de credenciales, que veremos en el punto 3; el bot adapter, que editaremos más tarde; y la clase que implementa IBot, que veremos en el punto 5.
 ### 3.	Configuration Credential Provider
 Esta clase recupera las credenciales de nuestro bot (que crearemos más tarde) del appsettings.json y se las pasa al constructor base que hereda del padre para instanciarse.
 El diagrama muestra los tres pasos que el SDK hará por nosotros para conseguir el token de autorización que utilizará para hablar con el Bot Connector.
