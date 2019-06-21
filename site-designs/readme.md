@@ -5,7 +5,7 @@
 
 ## Ponentes
 
-1. Rubén Ramos - [@rubenr79](https://twitter.com/@rubenr79)
+1. Rubén Ramos - [@rubenr79](https://twitter.com/rubenr79)
 2. Ferran Chopo - [@fchopo](https://twitter.com/fchopo)
 
 ## Pre-requisitos
