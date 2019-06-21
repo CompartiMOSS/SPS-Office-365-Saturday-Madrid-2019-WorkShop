@@ -28,3 +28,9 @@ Adjuntamos el fichero [HowToCreateBot](./HowCreateBot.tsv)
 Ejecutando desde el postman esta ruta podemos realizar pruebas del servicio.
 
 ![KnowledgeBase](assets/05_ConnectQnaServices.png)
+
+### [OPCIONAL]
+El servicio de QnAMaker permite introducir una frase que mostrar al usuario cuando no encuentra ninguna otra respuesta adecuada. Por defecto, esta frase es "No good match found in KB"
+
+Busca la web app de QnA que acabamos de crear → Clic en configuración → Clic en DefaultAnswer → Click en editar (lápiz) → Pon el valor que quieras responder al usuario cuando no encuentre ninguna respuesta adecuada para él.
+![Change default phrase in QnA](assets/changeDefaultName.png)
