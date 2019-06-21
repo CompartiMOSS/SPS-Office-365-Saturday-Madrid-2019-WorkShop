@@ -7,7 +7,7 @@ Podéis crear la base de conocimiento desde la web de [QnAMaker](https://www.qna
 ![QnAMakerService](assets/QnAMakerServices.png)
 
 
-2. [Crear una Knowledge Base](https://www.qnamaker.ai/Create), donde deberemos elegir el servicio de Azure creado previamente, indicar el nombre que queremos darle a esta base de datos, así como el fichero o las URLs mediante las cuáles construir el Bot.
+2. [Crear una Knowledge Base](https://www.qnamaker.ai/Create), donde deberemos elegir el servicio de Azure creado previamente, indicar el nombre que queremos darle a esta base de conocimiento, así como el fichero o las URLs mediante las cuáles construir el Bot.
 
 ![KnowledgeBase](assets/01_ConnectQnaService.png)
 
@@ -15,7 +15,7 @@ Indicamos el nombre "QnAMakerBot_SPSMAD"
 
 ![KnowledgeBase](assets/02_ConnectQnaService.png)
 
-Pulsamos Check en "Enable multi-turn extraction from URLs, .pdf or .docx files."
+Pulsamos Check en **"Enable multi-turn extraction from URLs, .pdf or .docx files."**
 
 Adjuntamos el fichero [HowToCreateBot](./HowCreateBot.tsv)
 ![KnowledgeBase](assets/03_ConnectQnaService.png)

@@ -6,14 +6,15 @@ Al descargarse la aplicación, se abrirá el cliente Microsoft Teams con una ven
 
 
 Pulse en la pestaña de “Manifest Editor” y a continuación en “Create new app”:
-![ConfigTeam](assets/03_Config_Teams.png).
+
+![ConfigTeam](assets/03_Config_Teams.png)
 
 
 Se abrirá entonces una pantalla desde la que tendremos que indicar los datos de nuestra aplicación y el tipo de aplicación. La pantalla estará dividida en diferentes secciones:
 
-o Details, desde la que indicaremos la información general de la aplicación como el título, datos de soporte, versión, identificador,…
-o Capabilities, donde seleccionaremos los elementos que dispondrá la aplicación, como una tab o un bot.
-o Finish, con un resumen de los datos introducidos.
+- Details, desde la que indicaremos la información general de la aplicación como el título, datos de soporte, versión, identificador,…
+- Capabilities, donde seleccionaremos los elementos que dispondrá la aplicación, como una tab o un bot.
+- Finish, con un resumen de los datos introducidos.
 
 ![ConfigTeam](assets/04_Config_Teams.png)
 
@@ -22,10 +23,10 @@ En la sección de “Capabilities” seleccionaremos “Bot” y “Setup”, de
 
 En la ventana emergente de la pantalla de Setup, seleccionaremos la opción “Existin bot”:
 
-o	El nombre del bot
-o	El App Id
-o	Las capacidades de envío de ficheros y mensajes.
-o	El ámbito del bot, si será solo personal para conversaciones por chat o para Teams en un canal.
+-	El nombre del bot
+-	El App Id
+-	Las capacidades de envío de ficheros y mensajes.
+-	El ámbito del bot, si será solo personal para conversaciones por chat o para Teams en un canal.
 
 
 ![ConfigTeam](assets/05_Config_Teams.png)
