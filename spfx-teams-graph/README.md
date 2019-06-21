@@ -200,6 +200,17 @@ El webpart mostrará un Taxonomy picker para que el usuario seleccione los Tags 
   }
 ```
 
+Si dejamos los estilos por defecto que vienen en la template, el TaxonomyPicker no se va a ver muy bien. Para corregir esto, editar el fichero _src\webparts\teamsTagging\components\TeamsTagging.module.scss_ y modificar el estilo:
+
+```css
+  .row {
+    @include ms-Grid-row;
+    // @include ms-fontColor-white;
+    background-color: $ms-color-themeDark;
+    padding: 20px;
+  }
+```
+
 Para obtener los Tags almacenados, primero necesitamos hacer una llamada a MS Graph, cosa que haremos dentro del método de componente _componentDidMount_, que se ejecuta una vez el componente ya está montado, y que es el sitio idóneo para hacer llamadas asíncronas y obtener datos al "cargar" el componente:
 
 ```ts
