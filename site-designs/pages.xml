@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2019/03/ProvisioningSchema">
+  <pnp:Preferences Generator="OfficeDevPnP.Core, Version=3.10.1906.0, Culture=neutral, PublicKeyToken=5e633289e95c321a" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-FAA2312FBA32442896C4A75EB8DC83C1">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-FAA2312FBA32442896C4A75EB8DC83C1" Version="1" BaseSiteTemplate="SITEPAGEPUBLISHING#0" Scope="RootSite">
+      <pnp:ClientSidePages>
+        <pnp:ClientSidePage PageName="Vacaciones-2019.aspx" PromoteAsNewsArticle="false" PromoteAsTemplate="false" Overwrite="true" EnableComments="false" Title="Vacaciones Verano">
+          <pnp:Sections>
+            <pnp:Section Order="1" Type="TwoColumn">
+              <pnp:Controls>
+                <pnp:CanvasControl WebPartType="Text" ControlId="8ac65c86-4276-402c-a17d-1f62c9ac3a03" Order="1" Column="1">
+                  <pnp:CanvasControlProperties>
+                    <pnp:CanvasControlProperty Key="Text" Value="&lt;h3&gt;Planifica las vacaciones !!!&lt;/h3&gt;&#xA;" />
+                  </pnp:CanvasControlProperties>
+                </pnp:CanvasControl>
+                <pnp:CanvasControl WebPartType="Custom" JsonControlData="{&quot;id&quot;: &quot;868ac3c3-cad7-4bd6-9a1c-14dc5cc8e823&quot;, &quot;instanceId&quot;: &quot;9802e831-a999-43a8-ae40-efad3b70fca8&quot;, &quot;title&quot;: &quot;El tiempo&quot;, &quot;description&quot;: &quot;Muestra condiciones meteorológicas actuales en la página.&quot;, &quot;dataVersion&quot;: &quot;1.2&quot;, &quot;properties&quot;: {&quot;temperatureUnit&quot;:&quot;C&quot;,&quot;locations&quot;:[{&quot;latitude&quot;:40.42,&quot;longitude&quot;:-3.706,&quot;name&quot;:&quot;Madrid, España&quot;,&quot;showCustomizedDisplayName&quot;:false}]}, &quot;serverProcessedContent&quot;: {&quot;htmlStrings&quot;:{},&quot;searchablePlainTexts&quot;:{},&quot;imageSources&quot;:{},&quot;links&quot;:{}}, &quot;dynamicDataPaths&quot;: {}, &quot;dynamicDataValues&quot;: {}}" ControlId="868ac3c3-cad7-4bd6-9a1c-14dc5cc8e823" Order="1" Column="2" />
+              </pnp:Controls>
+            </pnp:Section>
+          </pnp:Sections>
+          <pnp:Header Type="Custom" ServerRelativeImageUrl="{site}/SiteAssets/SitePages/newpage/10512-aerial-shot-aerial-view-bird-s-eye-view-2404673.jpg" TranslateX="60.7954545454545" TranslateY="39.0350877192982" LayoutType="FullWidthImage" TextAlignment="Center" ShowTopicHeader="false" ShowPublishDate="false" TopicHeader="" AlternativeText="" Authors="[]" AuthorByLineId="-1" />
+          <pnp:Security>
+            <pnp:BreakRoleInheritance CopyRoleAssignments="false" ClearSubscopes="false" />
+          </pnp:Security>
+        </pnp:ClientSidePage>
+        <pnp:ClientSidePage PageName="Plantillas/Evento.aspx" PromoteAsNewsArticle="false" PromoteAsTemplate="true" Overwrite="true" Title="Evento">
+          <pnp:Sections>
+            <pnp:Section Order="1" Type="OneColumn">
+              <pnp:Controls>
+                <pnp:CanvasControl WebPartType="Text" ControlId="c9ff6317-ae0e-4324-a216-fbc9d914a159" Order="1" Column="1">
+                  <pnp:CanvasControlProperties>
+                    <pnp:CanvasControlProperty Key="Text" Value="Descripción del evento" />
+                  </pnp:CanvasControlProperties>
+                </pnp:CanvasControl>
+              </pnp:Controls>
+            </pnp:Section>
+            <pnp:Section Order="2" Type="TwoColumn">
+              <pnp:Controls>
+                <pnp:CanvasControl WebPartType="People" JsonControlData="{&quot;id&quot;: &quot;7f718435-ee4d-431c-bdbf-9c4ff326f46e&quot;, &quot;instanceId&quot;: &quot;a6bd7b24-fb4d-45eb-890c-fbc8f343b883&quot;, &quot;title&quot;: &quot;Contactos&quot;, &quot;description&quot;: &quot;Muestra las personas seleccionadas y sus perfiles.&quot;, &quot;dataVersion&quot;: &quot;1.3&quot;, &quot;properties&quot;: {&quot;layout&quot;:1,&quot;persons&quot;:[]}, &quot;serverProcessedContent&quot;: {&quot;htmlStrings&quot;:{},&quot;searchablePlainTexts&quot;:{&quot;title&quot;:&quot;Personas de contacto&quot;},&quot;imageSources&quot;:{},&quot;links&quot;:{}}, &quot;dynamicDataPaths&quot;: {}, &quot;dynamicDataValues&quot;: {}}" ControlId="7f718435-ee4d-431c-bdbf-9c4ff326f46e" Order="1" Column="1" />
+                <pnp:CanvasControl WebPartType="Custom" JsonControlData="{&quot;id&quot;: &quot;62cac389-787f-495d-beca-e11786162ef4&quot;, &quot;instanceId&quot;: &quot;535d5226-e4d7-4c26-b461-47aa4a4957f2&quot;, &quot;title&quot;: &quot;Temporizador de cuenta atrás&quot;, &quot;description&quot;: &quot;Este elemento web se utiliza para permitir que un administrador de sitio cuente el tiempo de un evento importante o lo cronometre.&quot;, &quot;dataVersion&quot;: &quot;2.1&quot;, &quot;properties&quot;: {&quot;showButton&quot;:false,&quot;countDate&quot;:&quot;Sun Jun 16 2019 10:00:00 GMT+0200 (hora de verano de Europa central)&quot;,&quot;description&quot;:&quot;&quot;,&quot;countDirection&quot;:&quot;COUNT_DOWN&quot;,&quot;dateDisplay&quot;:&quot;DAY_HOUR_MINUTE_SECOND&quot;,&quot;buttonText&quot;:&quot;&quot;}, &quot;serverProcessedContent&quot;: {&quot;htmlStrings&quot;:{},&quot;searchablePlainTexts&quot;:{&quot;title&quot;:&quot;Tiempo restante&quot;},&quot;imageSources&quot;:{},&quot;links&quot;:{&quot;buttonURL&quot;:&quot;&quot;}}, &quot;dynamicDataPaths&quot;: {}, &quot;dynamicDataValues&quot;: {}}" ControlId="62cac389-787f-495d-beca-e11786162ef4" Order="2" Column="1" />
+                <pnp:CanvasControl WebPartType="BingMap" JsonControlData="{&quot;id&quot;: &quot;e377ea37-9047-43b9-8cdb-a761be2f8e09&quot;, &quot;instanceId&quot;: &quot;942591ff-6b90-478f-99b2-48c7af1d15b8&quot;, &quot;title&quot;: &quot;Mapas de Bing&quot;, &quot;description&quot;: &quot;Muestra la ubicación clave en un mapa.&quot;, &quot;dataVersion&quot;: &quot;1.0&quot;, &quot;properties&quot;: {&quot;pushPins&quot;:[],&quot;maxNumberOfPushPins&quot;:1,&quot;shouldShowPushPinTitle&quot;:true,&quot;zoomLevel&quot;:10,&quot;mapType&quot;:&quot;road&quot;,&quot;center&quot;:{&quot;latitude&quot;:41.554644542398414,&quot;longitude&quot;:2.4983860673587,&quot;altitude&quot;:0,&quot;altitudeReference&quot;:-1}}, &quot;serverProcessedContent&quot;: {&quot;htmlStrings&quot;:{},&quot;searchablePlainTexts&quot;:{&quot;title&quot;:&quot;Ubicación&quot;},&quot;imageSources&quot;:{},&quot;links&quot;:{}}, &quot;dynamicDataPaths&quot;: {}, &quot;dynamicDataValues&quot;: {}}" ControlId="e377ea37-9047-43b9-8cdb-a761be2f8e09" Order="1" Column="2" />
+              </pnp:Controls>
+            </pnp:Section>
+            <pnp:Section Order="3" Type="OneColumn" />
+          </pnp:Sections>
+          <pnp:Header Type="Custom" ServerRelativeImageUrl="/_LAYOUTS/IMAGES/SLEEKTEMPLATEIMAGETILE.JPG" LayoutType="CutInShape" TextAlignment="Center" ShowTopicHeader="true" ShowPublishDate="false" TopicHeader="" AlternativeText="" Authors="[]" AuthorByLineId="-1" />
+          <pnp:Security>
+            <pnp:BreakRoleInheritance CopyRoleAssignments="false" ClearSubscopes="false" />
+          </pnp:Security>
+        </pnp:ClientSidePage>
+      </pnp:ClientSidePages>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>

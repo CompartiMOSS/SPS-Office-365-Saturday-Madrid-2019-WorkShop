@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "avenger-people-picker-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/avengerPeoplePicker/AvengerPeoplePickerWebPart.js",
+          "manifest": "./src/webparts/avengerPeoplePicker/AvengerPeoplePickerWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    
+  },
+  "localizedResources": {
+    "AvengerPeoplePickerWebPartStrings": "lib/webparts/avengerPeoplePicker/loc/{locale}.js"
+  }
+}

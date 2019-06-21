@@ -404,4 +404,172 @@ Como último paso, aunque podemos hacerlo en tiempo de configuración del webpar
 ```
 
 ## Despliegue y configuración en Teams
-TBC...
+
+Para poder desplegar nuestro webpart en Teams es necesario poder proporcionarle contexto de Teams más allá del que ya tenemos en SharePoint. Para ello, tendremos que hacer lo siguiente:
+
+### 1. Modificar archivo `TeamsTaggingWebPart.ts`
+
+Importamos la librería de Microsoft Teams:
+
+```ts
+import * as microsoftTeams from '@microsoft/teams-js';
+```
+
+Declararemos la siguiente variable:
+
+```ts
+private _teamsContext: microsoftTeams.Context;
+```
+
+E inicializaremos el webpart con el siguiente código:
+
+```ts
+  protected onInit(): Promise<any> {
+    let retVal: Promise<any> = Promise.resolve();
+    if (this.context.microsoftTeams) {
+      retVal = new Promise((resolve, reject) => {
+        this.context.microsoftTeams.getContext(context => {
+          this._teamsContext = context;
+          resolve();
+        });
+      });
+    }
+    return retVal;
+  }
+```
+
+### 2. Modificar el archivo `TeamsTaggingWebPart.manifest.json`
+
+Modificaremos la propiedad `"supportedHosts"` para indicarle que también se puede desplegar en Teams con `"TeamsTab"`.
+
+```json
+"supportedHosts": ["SharePointWebPart", "TeamsTab"],
+```
+
+### 3. Crear el archivo `manifest.json`
+
+Cuando creamos nuestro webpart, quizá hayamos visto que nuestro webpart tiene una carpeta llamada `"teams"` dentro de la solución que contiene dos imágenes, que no son más que los iconos que tendrá nuestra aplicación. En ella, crearemos nuestro archivo `manifest.json`: 
+
+![teams-manifest-json](./assets/teams-manifest-json.png)
+
+Y lo rellenamos con la información de un manifest.json que os dejamos de ejemplo. Recordad cambiar todos aquellas propiedades indicadas con `{{SPFX_COMPONENT_XXX}}`:
+
+```json
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.2/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.2",
+  "packageName": "{{SPFX_COMPONENT_ALIAS}}",
+  "id": "aa3fecf0-1fd0-4751-aba1-12314dc3a22f",
+  "version": "0.1",
+  "developer": {
+    "name": "Luis Mañez & Angel Carrillo",
+    "websiteUrl": "https://products.office.com/en-us/sharepoint/collaboration",
+    "privacyUrl": "https://privacy.microsoft.com/en-us/privacystatement",
+    "termsOfUseUrl": "https://www.microsoft.com/en-us/servicesagreement"
+  },
+  "name": {
+    "short": "{{SPFX_COMPONENT_NAME}}"
+  },
+  "description": {
+    "short": "{{SPFX_COMPONENT_SHORT_DESCRIPTION}}",
+    "full": "{{SPFX_COMPONENT_LONG_DESCRIPTION}}"
+  },
+  "icons": {
+    "outline": "{{SPFX_COMPONENT_ID}}_outline.png",
+    "color": "{{SPFX_COMPONENT_ID}}_color.png"
+  },
+  "accentColor": "#004578",
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://{teamSiteDomain}{teamSitePath}/_layouts/15/TeamsLogon.aspx?SPFX=true&dest={teamSitePath}/_layouts/15/teamshostedapp.aspx%3FopenPropertyPane=true%26teams%26componentId={{SPFX_COMPONENT_ID}}%26forceLocale={locale}",
+      "canUpdateConfiguration": true,
+      "scopes": [
+        "team"
+      ]
+    }
+  ],
+  "validDomains": [
+    "*.login.microsoftonline.com",
+    "*.sharepoint.com",
+    "*.sharepoint-df.com",
+    "spoppe-a.akamaihd.net",
+    "spoprod-a.akamaihd.net",
+    "resourceseng.blob.core.windows.net",
+    "msft.spoppe.com"
+  ],
+  "webApplicationInfo": {
+    "resource": "https://{teamSiteDomain}",
+    "id": "00000003-0000-0ff1-ce00-000000000000"
+  }
+}
+```
+
+__NOTA:__ El valor de `{{SPFX_COMPONENT_ID}}` lo podréis sacar de vuestro archivo `TeamsTaggingWebPart.manifest.json`, en la propiedad `id`.
+
+Con esto, ya tendremos disponible nuestro webpart para ser publicado.
+
+### 4. Publicar la aplicación en el App Catalog de SharePoint
+
+Los webparts de Teams se han de publicar como cualquier otro webpart de SPFx y para ello tendremos que ir al SharePoint App Catalog (o al _Site Collection App Catalog_), donde subiremos nuestro paquete `.sppkg`, marcaremos la opción de _Hacer que esta solución esté disponible en todos los sitios de la organización_ y la implementaremos.
+
+![upload-webpart-app-catalog](./assets/upload-webpart-app-catalog.png)
+
+### 5. Instalar la aplicación en un sitio de SharePoint (_Office 365 Group_)
+
+Posteriormente, iremos al sitio de SharePoint del grupo de Office 365 del que hemos creado nuestro almacén de términos e instalaremos nuestra aplicación.
+
+![install-app-sharepoint-1](./assets/install-app-sharepoint-1.png)
+
+![install-app-sharepoint-2](./assets/install-app-sharepoint-2.png)
+
+#### OPCIONAL
+
+Podemos desplegar nuestro webpart en una página de SharePoint para ver el resultado:
+
+![add-webpart-page-1](./assets/add-webpart-page-1.png)
+
+![add-webpart-page-2](./assets/add-webpart-page-2.png)
+
+### 6. Permitir aplicaciones externas en Teams
+
+Antes de pasar a Teams, tendremos que habilitar en el Centro de Administración de Microsoft 365 el poder permitir aplicaciones externas e instalaciones de prueba. Para ello iremos a `https://admin.microsoft.com` y en el menú de la izquierda pincharemos en _Mostrar Todo_ > _Configuración_ > _Servicios y complementos_ y seleccionaremos "Microsoft Teams" del listado.
+
+![admin-portal-1](./assets/admin-portal-1.png)
+
+Se nos abrirá un panel lateral donde buscaremos la opción de "Aplicaciones Externas" y activaremos los tres sliders.
+
+![admin-portal-1](./assets/admin-portal-2.png)
+
+### 7. Despliegue de nuestra app en Teams
+
+Por fin llegamos a Teams :) Para poder instalar nuestra aplicación nos iremos al equipo donde queramos instalarla, mostraremos su menú y pincharemos en la opción de "Administrar equipo".
+
+![manage-team](./assets/manage-team.png)
+
+Posteriormente nos iremos a la pestaña de "Aplicaciones", donde veremos un enlace en la parte inferior derecha que indica `Cargar una aplicación personalizada`. Haremos click en él.
+
+![upload-teams-app](./assets/upload-teams-app.png)
+
+Se nos abrirá una ventana del explorador para que indiquemos el archivo comprimido de nuestra aplicación que subiremos a Teams. Para ello, sólo tendremos que ir a nuestra solución de SPFx y comprimir en formato .zip los archivos que se encuentran dentro de la carpeta "teams".
+
+![teams-zip-file](./assets/teams-zip-file.png)
+
+Una vez lo hayamos subido, aparecerá entre nuestras aplicaciones instaladas.
+
+![install-teams-app](./assets/install-teams-app.png)
+
+### 8. Creación de pestaña en Teams con nuestra app
+
+Si el despliegue ha ido correcto, aparte de verlo en el listado de nuestras aplicaciones instaladas, deberá aparecernos al intentar añadir una nueva pestaña dentro de nuestro canal.
+
+![add-tab-1](./assets/add-tab-1.png)
+
+Guardaremos los cambios de las siguientes pantallas que nos aparezcan...
+
+![add-tab-2](./assets/add-tab-2.png)
+
+...¡y ya tendremos nuestro webpart disponible para ser usado dentro de Teams!
+
+![teams-app-1](./assets/teams-app-1.png)
+
+![teams-app-2](./assets/teams-app-2.png)
